@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - ИТС-Ком</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">ИТС-Ком</span>
+                <span class="logo-text">ИТС-Ком</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Форма регистрации -->
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Регистрация нового пользователя</h2>
+            <form id="registerForm" action="/register" method="POST">
+                <div class="form-group">
+                    <label class="form-label">Логин</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="Введите логин (минимум 3 символа)"
+                        required
+                        minlength="3"
+                    >
+                    <small class="form-hint">Будет использоваться для входа в систему</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Введите пароль (минимум 5 символов)"
+                        required
+                        minlength="5"
+                    >
+                    <small class="form-hint">Минимум 5 символов</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Подтверждение пароля</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        class="form-input" 
+                        placeholder="Повторите пароль"
+                        required
+                    >
+                </div>
+                
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="error-message">
+                        <%= error %>
+                    </div>
+                <% } %>
+                
+                <% if (typeof success !== 'undefined' && success) { %>
+                    <div class="success-message">
+                        <%= success %>
+                    </div>
+                <% } %>
+                
+                <button type="submit" class="btn-login">Зарегистрироваться</button>
+                
+                <div class="form-footer">
+                    Уже есть аккаунт? <a href="/login" class="link">Войти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Проверка совпадения паролей
+        const form = document.getElementById('registerForm');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        
+        form.addEventListener('submit', function(e) {
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault();
+                alert('Пароли не совпадают!');
+                confirmPassword.focus();
+                return false;
+            }
+        });
+        
+        // Автофокус
+        document.getElementById('username').focus();
+    </script>
+</body>
+</html>
+

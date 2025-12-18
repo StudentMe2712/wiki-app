@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki - ИТС-Ком</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/wiki-page.css">
+</head>
+<body>
+    <button class="wiki-menu-toggle" id="wikiMenuToggle">☰</button>
+    <!-- Шапка с логотипом -->
+    <header class="header-main">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="logo-icon">ИТС-Ком</span>
+                <h1 class="logo-title">ИТС-Ком</h1>
+            </div>
+            <div class="search-section">
+                <span class="user-info-header">Вошли как <%= user.username %></span>
+                <a href="/logout" class="logout-link-header">Выйти</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Панель навигации (светлая) -->
+    <nav class="navbar-main">
+        <a href="/" class="nav-item">Главная</a>
+        <a href="/wiki" class="nav-item active">Wiki</a>
+    </nav>
+
+    <!-- Заголовок с кнопками -->
+    <div class="wiki-header-block">
+        <h2 class="wiki-header-title">Оглавление</h2>
+        <div class="wiki-header-actions">
+            <button class="wiki-header-btn" id="addOrgBtn">
+                <span class="wiki-header-btn-icon">+</span> Новая wiki-страница
+            </button>
+            <button class="wiki-header-btn" id="deleteBtnTop">
+                <span class="wiki-header-btn-icon">🗑</span> Удалить
+            </button>
+            <% if (currentOrg) { %>
+                <button class="wiki-header-btn" id="followBtnTop">
+                    <span class="wiki-header-btn-icon">★</span> Следить
+                </button>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Контейнер с тремя колонками -->
+    <div class="wiki-container">
+        <!-- Левая колонка -->
+        <aside class="wiki-sidebar-left">
+            <ul class="wiki-list">
+                <% if (organizations && organizations.length > 0) { %>
+                    <% organizations.forEach(org => { %>
+                        <li class="wiki-list-item">
+                            <a href="/wiki/organization/<%= org.id %>" class="wiki-list-link <%= currentOrg && currentOrg.id === org.id ? 'active' : '' %>">
+                                <%= org.name %>
+                            </a>
+                        </li>
+                    <% }); %>
+                <% } else { %>
+                    <li class="wiki-list-item empty">Нет организаций</li>
+                <% } %>
+            </ul>
+        </aside>
+
+        <!-- Центральная колонка (основной контент) -->
+        <main class="wiki-main">
+            <% if (!currentOrg) { %>
+                <!-- Страница wiki без выбранной организации -->
+                <div class="org-page-content">
+                    <h2 class="org-title"></h2>
+                    <p></p>
+                    <p></p>
+                </div>
+            <% } else { %>
+                <!-- Страница организации -->
+                <div class="org-page-content">
+                    <!-- Заголовок и кнопки действий -->
+                    <div class="org-header">
+                        <h2 class="org-title" id="orgTitle"><%= currentOrg.name %></h2>
+                        <div class="org-actions">
+                            <button class="action-btn action-btn-edit" id="editBtnTop">
+                                <span class="action-icon">✎</span> Редактировать
+                            </button>
+                            <button class="action-btn" id="followBtn">
+                                <span class="action-icon">★</span> Следить
+                            </button>
+                            <button class="action-btn-menu" id="menuBtn">
+                                <span class="action-icon">⋯</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Просмотр контента -->
+                    <div class="org-content-view" id="pageContent">
+                        <% if (currentOrg.content && currentOrg.content.trim() !== '') { %>
+                            <div class="content-plain"><%= currentOrg.content %></div>
+                        <% } else { %>
+                            <p class="content-empty">Содержимое пусто.</p>
+                        <% } %>
+                    </div>
+                    
+                    <!-- Форма редактирования -->
+                    <div class="org-edit-form" id="editForm" style="display: none;">
+                        <div class="edit-group">
+                            <label for="orgNameInput" class="edit-label">Название:</label>
+                            <input type="text" id="orgNameInput" class="edit-input" value="<%= currentOrg.name %>">
+                        </div>
+                        <div class="edit-group">
+                            <label for="orgContentInput" class="edit-label">Содержимое:</label>
+                            <textarea id="orgContentInput" class="edit-textarea" rows="20"><%= currentOrg.content %></textarea>
+                        </div>
+                        <div class="edit-actions">
+                            <button class="wiki-btn wiki-btn-save" id="saveBtn">Сохранить</button>
+                            <button class="wiki-btn wiki-btn-cancel" id="cancelBtn">Отмена</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Файлы (пустой блок) -->
+                    <div class="files-section">
+                        <h3 class="files-toggle">
+                            <span class="toggle-arrow">▶</span> Файлы (0)
+                        </h3>
+                    </div>
+                    
+                    <!-- Информация об обновлении -->
+                    <div class="update-info">
+                        Обновлено <%= user.username %> <%= new Date().toLocaleString('ru-RU', { 
+                            day: '2-digit', 
+                            month: '2-digit', 
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }) %> · 
+                        <a href="#" class="info-link">изменений(0, 0)</a>
+                    </div>
+                    
+                    <!-- Экспорт -->
+                    <div class="export-section">
+                        <span class="export-label">Экспортировать в</span>
+                        <a href="/api/export/pdf/<%= currentOrg.id %>" class="export-icon" title="PDF">
+                            <img src="/images/pdf.png" alt="PDF" onerror="this.style.display='none'">
+                            📄 PDF
+                        </a>
+                        <a href="/api/export/txt/<%= currentOrg.id %>" class="export-icon" title="TXT">
+                            📝 TXT
+                        </a>
+                    </div>
+                    
+                    <input type="hidden" id="currentOrgId" value="<%= currentOrg.id %>">
+                </div>
+            <% } %>
+        </main>
+
+        <!-- Правая колонка -->
+        <aside class="wiki-sidebar-right">
+            <h3 class="sidebar-title">Wiki</h3>
+            <ul class="wiki-right-menu">
+                <li><a href="/" class="right-menu-link">Стартовая страница</a></li>
+                <li><a href="/wiki" class="right-menu-link">Оглавление</a></li>
+                <li><a href="#" class="right-menu-link">История страниц</a></li>
+            </ul>
+            <h3 class="sidebar-title">Недавно просмотренные</h3>
+            <ul class="wiki-right-menu">
+                <li><a href="/wiki" class="right-menu-link">ИТС-Ком</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Футер -->
+    <footer class="wiki-footer">
+        <div class="footer-content">
+            Powered by <a href="#" class="footer-link">Redmine</a> © 2006-2020 Jean-Philippe Lang
+        </div>
+    </footer>
+
+    <!-- Модальное окно для создания новой организации -->
+    <div class="modal" id="addOrgModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Новая организация</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newOrgName">Название организации:</label>
+                    <input type="text" id="newOrgName" class="form-input" placeholder="Введите название">
+                </div>
+                <div class="form-group">
+                    <label for="newOrgContent">Содержимое (опционально):</label>
+                    <textarea id="newOrgContent" class="form-textarea" rows="10" placeholder="Введите содержимое"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="createOrgBtn">Создать</button>
+                <button class="btn btn-secondary" id="cancelModalBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для удаления организации -->
+    <div class="modal" id="deleteOrgModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Удалить организацию</h2>
+                <button class="modal-close" id="closeDeleteModal">&times;</button>
+            </div>
+            <div class="modal-body" id="deleteModalBody">
+                <% if (!currentOrg && organizations && organizations.length > 0) { %>
+                    <p>Выберите организацию для удаления:</p>
+                    <select id="deleteOrgSelect" class="form-input" style="width: 100%; margin-top: 10px;">
+                        <option value="">-- Выберите организацию --</option>
+                        <% organizations.forEach(org => { %>
+                            <option value="<%= org.id %>"><%= org.name %></option>
+                        <% }); %>
+                    </select>
+                <% } else if (currentOrg) { %>
+                    <p>Вы уверены, что хотите удалить организацию <strong id="deleteOrgName"><%= currentOrg.name %></strong>?</p>
+                    <input type="hidden" id="deleteOrgId" value="<%= currentOrg.id %>">
+                <% } else { %>
+                    <p>Нет организаций для удаления.</p>
+                <% } %>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
+                <button class="btn btn-secondary" id="cancelDeleteBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
+

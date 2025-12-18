@@ -1,0 +1,645 @@
+/* Стили для страницы Wiki в стиле Redmine */
+
+/* Сброс стилей для wiki страницы */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    color: #484848;
+    background: #fff;
+}
+
+/* Шапка с логотипом */
+.header-main {
+    background: linear-gradient(to bottom, #628DB6 0%, #4E7BA3 100%);
+    padding: 8px 12px;
+    border-bottom: 1px solid #5B9BC3;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    background: #FFD700;
+    color: #000;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.logo-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info-header {
+    color: #fff;
+    font-size: 12px;
+}
+
+.logout-link-header {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 3px 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.logout-link-header:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Панель навигации (светлая) */
+.navbar-main {
+    background: #759FCF;
+    padding: 5px 8px;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.nav-plus {
+    background: #17994D;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.nav-plus:hover {
+    background: #14853F;
+}
+
+.nav-item {
+    color: #fff;
+    text-decoration: none;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.nav-item.active {
+    background: #35537A;
+    font-weight: bold;
+}
+
+/* Заголовок с кнопками */
+.wiki-header-block {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.wiki-header-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin: 0;
+}
+
+.wiki-header-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.wiki-header-btn {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.2s;
+}
+
+.wiki-header-btn:hover {
+    background: #f2f2f2;
+}
+
+.wiki-header-btn-icon {
+    font-size: 12px;
+}
+
+/* Контейнер с тремя колонками */
+.wiki-container {
+    display: grid;
+    grid-template-columns: 230px 1fr 250px;
+    gap: 20px;
+    padding: 12px 20px;
+    background: #fff;
+    min-height: calc(100vh - 160px);
+}
+
+/* Левая колонка */
+.wiki-sidebar-left {
+    background: #fff;
+}
+
+.wiki-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wiki-list-item {
+    margin: 0;
+    padding: 2px 0;
+    list-style-type: disc;
+    margin-left: 18px;
+}
+
+.wiki-list-item.empty {
+    list-style-type: none;
+    margin-left: 0;
+    color: #999;
+    font-style: italic;
+}
+
+.wiki-list-link {
+    color: #169;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.wiki-list-link:hover {
+    color: #c61a1a;
+    text-decoration: underline;
+}
+
+.wiki-list-link.active {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Центральная колонка */
+.wiki-main {
+    background: #fff;
+    min-height: 400px;
+}
+
+/* Контент страницы организации */
+.org-page-content {
+    background: #fff;
+}
+
+.org-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.org-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    margin: 0;
+}
+
+.org-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.action-btn {
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.action-btn:hover {
+    background: #e5e5e5;
+}
+
+.action-btn-edit {
+    background: #fff;
+}
+
+.action-btn-menu {
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #333;
+}
+
+.action-icon {
+    font-size: 12px;
+}
+
+/* Контент просмотр */
+.org-content-view {
+    margin-bottom: 30px;
+}
+
+.content-plain {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.content-empty {
+    color: #999;
+    font-style: italic;
+}
+
+/* Форма редактирования */
+.org-edit-form {
+    margin-top: 20px;
+}
+
+.edit-group {
+    margin-bottom: 15px;
+}
+
+.edit-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 12px;
+}
+
+.edit-input,
+.edit-textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+}
+
+.edit-textarea {
+    font-family: 'Courier New', Courier, monospace;
+    resize: vertical;
+}
+
+.edit-actions {
+    margin-top: 15px;
+}
+
+.wiki-btn-save {
+    background: #17994D;
+    color: #fff;
+    border: 1px solid #17994D;
+}
+
+.wiki-btn-save:hover {
+    background: #14853F;
+}
+
+.wiki-btn-cancel {
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+}
+
+/* Блок файлов */
+.files-section {
+    margin: 30px 0 20px 0;
+    padding-top: 10px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.files-toggle {
+    font-size: 13px;
+    font-weight: bold;
+    color: #555;
+    margin: 0;
+    cursor: pointer;
+}
+
+.toggle-arrow {
+    font-size: 10px;
+    color: #999;
+}
+
+/* Информация об обновлении */
+.update-info {
+    font-size: 11px;
+    color: #666;
+    margin: 15px 0;
+    font-style: italic;
+}
+
+.info-link {
+    color: #169;
+    text-decoration: none;
+}
+
+.info-link:hover {
+    color: #c61a1a;
+    text-decoration: underline;
+}
+
+/* Экспорт */
+.export-section {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.export-label {
+    font-size: 11px;
+    color: #666;
+}
+
+.export-icon {
+    color: #169;
+    text-decoration: none;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.export-icon:hover {
+    color: #c61a1a;
+}
+
+.export-icon img {
+    width: 16px;
+    height: 16px;
+}
+
+.wiki-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.wiki-btn {
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.wiki-btn:hover {
+    background: #e5e5e5;
+}
+
+.wiki-btn-primary {
+    background: #17994D;
+    color: #fff;
+    border-color: #17994D;
+}
+
+.wiki-btn-primary:hover {
+    background: #14853F;
+}
+
+.wiki-btn-success {
+    background: #17994D;
+    color: #fff;
+    border-color: #17994D;
+}
+
+.btn-icon {
+    font-weight: bold;
+}
+
+.wiki-content-box {
+    background: #fff;
+}
+
+.content-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin: 0 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.content-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #484848;
+}
+
+.wiki-pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    background: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.empty-text {
+    color: #999;
+    font-style: italic;
+}
+
+/* Форма редактирования */
+.edit-form-wiki {
+    margin-top: 20px;
+}
+
+.form-group-wiki {
+    margin-bottom: 15px;
+}
+
+.form-group-wiki label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-wiki,
+.textarea-wiki {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+}
+
+.textarea-wiki {
+    font-family: 'Courier New', Courier, monospace;
+    resize: vertical;
+}
+
+.form-actions-wiki {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Правая колонка */
+.wiki-sidebar-right {
+    background: #fff;
+}
+
+.wiki-right-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.wiki-right-menu li {
+    margin: 0;
+    padding: 3px 0;
+}
+
+.right-menu-link {
+    color: #169;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.right-menu-link:hover {
+    color: #c61a1a;
+    text-decoration: underline;
+}
+
+/* Футер */
+.wiki-footer {
+    background: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
+    padding: 10px 12px;
+    margin-top: 30px;
+    font-size: 10px;
+    color: #666;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-link {
+    color: #169;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: #c61a1a;
+    text-decoration: underline;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .wiki-container {
+        grid-template-columns: 200px 1fr;
+    }
+    
+    .wiki-sidebar-right {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .wiki-container {
+        grid-template-columns: 1fr;
+        padding-top: 50px; /* Добавим отступ сверху для кнопки меню */
+        position: relative;
+    }
+    
+    .wiki-sidebar-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 80%; /* Или другая удобная ширина */
+        height: 100%;
+        background: #fff;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+        overflow-y: auto;
+    }
+
+    .wiki-sidebar-left.active {
+        transform: translateX(0);
+    }
+
+    .wiki-sidebar-right {
+        display: none; /* Правая колонка остается скрытой на мобильных */
+    }
+
+    /* Стили для кнопки открытия сайдбара */
+    .wiki-menu-toggle {
+        display: block; /* Показываем кнопку только на мобильных */
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background: #4E7BA3;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        z-index: 110;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+}
+
+/* Стили для кнопки, скрытой по умолчанию */
+.wiki-menu-toggle {
+    display: none;
+}
+
+

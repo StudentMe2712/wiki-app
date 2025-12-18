@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИТС-Ком</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">ИТС-Ком</span>
+                <span class="logo-text">ИТС-Ком</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="user-info">Вошли как <%= user.username %></span>
+            <a href="/logout" class="header-link">Выйти</a>
+        </div>
+    </header>
+
+    <!-- Панель навигации -->
+    <nav class="navbar">
+        <a href="/" class="nav-link active">Главная</a>
+        <a href="/wiki" class="nav-link">Wiki</a>
+    </nav>
+
+    <div class="home-container">
+        <h1 class="home-title">ИТС-Ком</h1>
+        <p class="home-subtitle">База знаний</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">Wiki</h3>
+                <p class="card-description">Данные от серверов</p>
+                <a href="/wiki" class="card-link">Перейти →</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3 class="card-title">События</h3>
+                <p class="card-description">Просмотр событии</p>
+                <a href="#" class="card-link disabled">Скоро →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

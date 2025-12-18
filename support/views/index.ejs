@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИТС-Ком - Wiki</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">ИТС-Ком</span>
+                <span class="logo-text">ИТС-Ком</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="user-info">Вошли как <%= user.username %></span>
+            <a href="/logout" class="header-link">Выйти</a>
+        </div>
+    </header>
+
+    <!-- Панель навигации -->
+    <nav class="navbar">
+        <button class="nav-btn" id="addOrgBtn">+ Новая wiki-страница</button>
+        <a href="/" class="nav-link <%= page === 'home' ? 'active' : '' %>">Главная</a>
+        <a href="#" class="nav-link">Задачи</a>
+        <a href="#" class="nav-link <%= page === 'organization' ? 'active' : '' %>">Wiki</a>
+    </nav>
+
+    <div class="container">
+        <!-- Левое меню -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Wiki</h3>
+            </div>
+            <ul class="org-list" id="orgList">
+                <% if (organizations && organizations.length > 0) { %>
+                    <% organizations.forEach(org => { %>
+                        <li class="org-item <%= currentOrg && currentOrg.id === org.id ? 'active' : '' %>">
+                            <a href="/organization/<%= org.id %>" class="org-link">
+                                <%= org.name %>
+                            </a>
+                        </li>
+                    <% }); %>
+                <% } else { %>
+                    <li class="org-item empty">Нет организаций</li>
+                <% } %>
+            </ul>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="content">
+            <% if (page === 'home') { %>
+                <!-- Главная страница -->
+                <div class="welcome">
+                    <h1>ИТС-Ком - База знаний</h1>
+                    <p>Добро пожаловать в систему управления знаниями ИТС-Ком.</p>
+                    <p>Выберите организацию в меню слева или создайте новую, нажав кнопку "+ Новая wiki-страница".</p>
+                </div>
+            <% } else if (currentOrg) { %>
+                <!-- Страница организации -->
+                <div class="org-page">
+                    <div class="page-header">
+                        <h1 id="orgTitle"><%= currentOrg.name %></h1>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" id="editBtn">✏️ Редактировать</button>
+                            <button class="btn btn-secondary" id="deleteBtn">🗑️ Удалить</button>
+                            <div class="export-dropdown">
+                                <button class="btn btn-secondary" id="exportBtn">⬇️ Экспортировать</button>
+                                <div class="dropdown-menu" id="exportMenu">
+                                    <a href="/api/export/pdf/<%= currentOrg.id %>" class="dropdown-item">📄 PDF</a>
+                                    <a href="/api/export/txt/<%= currentOrg.id %>" class="dropdown-item">📝 TXT</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-content" id="pageContent">
+                        <% if (currentOrg.content && currentOrg.content.trim() !== '') { %>
+                            <pre><%= currentOrg.content %></pre>
+                        <% } else { %>
+                            <p class="empty-content">Содержимое пусто. Нажмите "Редактировать" для добавления информации.</p>
+                        <% } %>
+                    </div>
+                    
+                    <!-- Форма редактирования (скрыта по умолчанию) -->
+                    <div class="edit-form" id="editForm" style="display: none;">
+                        <div class="form-group">
+                            <label for="orgNameInput">Название организации:</label>
+                            <input type="text" id="orgNameInput" class="form-input" value="<%= currentOrg.name %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="orgContentInput">Содержимое:</label>
+                            <textarea id="orgContentInput" class="form-textarea" rows="20"><%= currentOrg.content %></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-success" id="saveBtn">💾 Сохранить</button>
+                            <button class="btn btn-secondary" id="cancelBtn">❌ Отмена</button>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="currentOrgId" value="<%= currentOrg.id %>">
+                </div>
+            <% } %>
+        </main>
+    </div>
+
+    <!-- Модальное окно для создания новой организации -->
+    <div class="modal" id="addOrgModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Новая организация</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newOrgName">Название организации:</label>
+                    <input type="text" id="newOrgName" class="form-input" placeholder="Введите название">
+                </div>
+                <div class="form-group">
+                    <label for="newOrgContent">Содержимое (опционально):</label>
+                    <textarea id="newOrgContent" class="form-textarea" rows="10" placeholder="Введите содержимое"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="createOrgBtn">Создать</button>
+                <button class="btn btn-secondary" id="cancelModalBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
+
+

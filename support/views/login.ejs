@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - ИТС-Ком</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">ИТС-Ком</span>
+                <span class="logo-text">ИТС-Ком</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Форма авторизации -->
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Пользователь</h2>
+            <form id="loginForm" action="/login" method="POST">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="логин"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Пароль
+                        <a href="#" class="forgot-password">Восстановление пароля</a>
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        value="........"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember" id="remember">
+                        <span>Оставаться в системе</span>
+                    </label>
+                </div>
+                
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="error-message">
+                        <%= error %>
+                    </div>
+                <% } %>
+                
+                <button type="submit" class="btn-login">Вход</button>
+                
+                <div class="form-footer">
+                    Нет аккаунта? <a href="/register" class="link">Зарегистрироваться</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Автофокус на поле логина
+        document.getElementById('username').focus();
+        
+        // Очистка placeholder при фокусе
+        const passwordInput = document.getElementById('password');
+        passwordInput.addEventListener('focus', function() {
+            if (this.value === '........') {
+                this.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
+
